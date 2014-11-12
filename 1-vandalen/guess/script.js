@@ -16,7 +16,7 @@ window.onload = function(){
 			stepper-=1;
 			return [false, "Talet är utanför intervallet 0 - 100"];
 		}
-		else if (number === secret)
+		else if (+number === secret)
 		{
 			return [true, "Grattis du vann! Det hemliga talet var " + secret + " och du behövde " + stepper + " gissningar för att hitta det."];
 		}

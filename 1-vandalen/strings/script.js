@@ -6,10 +6,31 @@ window.onload = function(){
 	var convertString = function(str){
 		// Plats för förändring.		
 		// Returnera den konverterade strängen.
-		// Vid fel, kasta ett undantag med ett meddelande till användaren. 
-	
+		// Vid fel, kasta ett undantag med ett meddelande till användaren.
+		var returnString = "";
+		if (str.length === 0)
+		{
+			throw new Error("String är null");
+		}
+		for (var i = 0; i <= str.length; i+=1)
+		{
+			var letter = str.charAt(i);
+			if (letter === letter.toUpperCase())
+			{
+				letter = letter.toLowerCase();
+			}
+			else if (letter === letter.toLowerCase())
+			{
+				letter = letter.toUpperCase();
+			}
+			if (letter === "a" || letter === "A")
+			{
+				letter = "#";
+			}
+			returnString = returnString + letter;
+		}
 
-
+		return returnString;
 
 
 
