@@ -4,14 +4,26 @@ window.onload = function(){
 
 	
 	var birthday = function(date){
+		var controlString1 = date.substring(0, 3);
+		var controlString2 = date.substring(5, 6);
+		var controlString3 = date.substring(8, 9);
 		
-
-
-			// Din kod här.
-
-
-
-
+		if ((isNaN(controlString1)) || (date.charAt(4) !== "-") || (date.charAt(7) !== "-") || (isNaN(controlString2)) || (isNaN(controlString3))) {
+			throw new Error("Indatan var i felaktigt format");
+		}
+		var bDate = new Date(date);
+		var todayDate = new Date();
+		
+		bDate.setFullYear(todayDate.getUTCFullYear());
+		
+		var diffrenceTime = bDate.getTime() - todayDate.getTime();
+		var diffrenceDay = Math.ceil(diffrenceTime / (1000*60*60*24));
+		if (diffrenceDay < 0){
+			bDate.setFullYear(todayDate.getUTCFullYear()+1);
+			diffrenceTime = bDate.getTime() - todayDate.getTime();
+			diffrenceDay = Math.ceil(diffrenceTime / (1000*60*60*24));
+		}
+		return diffrenceDay;
 	};
 	// ------------------------------------------------------------------------------
 
@@ -28,7 +40,7 @@ window.onload = function(){
 		p.classList.remove( "error");
 
 		try {
-			var answer = birthday(input.value) // Läser in texten från textrutan och skickar till funktionen "convertString"
+			var answer = birthday(input.value); // Läser in texten från textrutan och skickar till funktionen "convertString"
 			var message;
 			switch (answer){
 				case 0: message = "Grattis på födelsedagen!";
