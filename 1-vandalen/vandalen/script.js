@@ -1,26 +1,24 @@
 "use strict";
 
 var makePerson = function(persArr){
-    var inData = persArr;
     var arrayOfNames;
+    var arrayOfAge;
     var nameString = "";
-    
-    for (var i = 0; i <= inData.length; i=+ 1)
-    {
-        arrayOfNames[i] = inData[i].name;
+    var sendBackObject = {
+        minAge:400,
+        maxAge:0,
+        averageAge:0,
+        names:""
     };
+    
+    arrayOfNames = persArr.map(function(personObject){return personObject.name});
     arrayOfNames.sort();
     
-    for (i = 0; i <= arrayOfNames.length; i=+ 1)
-    {
-        if(i === 0)
-        {
-            nameString = arrayOfNames[i];
-        }
-        else
-        {
-        nameString = nameString + ", " + arrayOfNames[i];
-        }
-    }
+    arrayOfAge = persArr.map(function(personObject){return personObject.age});
+    arrayOfAge.sort();
+    alert(arrayOfAge);
+    
+    sendBackObject.names = arrayOfNames[0] + ", " + arrayOfNames[1] + ", " + arrayOfNames[2];
+    return sendBackObject;
 }
 
