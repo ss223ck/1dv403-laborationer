@@ -18,6 +18,7 @@ window.onload = function(){
 		
 		var diffrenceTime = bDate.getTime() - todayDate.getTime();
 		var diffrenceDay = Math.ceil(diffrenceTime / (1000*60*60*24));
+		
 		if (diffrenceDay < 0){
 			bDate.setFullYear(todayDate.getUTCFullYear()+1);
 			diffrenceTime = bDate.getTime() - todayDate.getTime();
