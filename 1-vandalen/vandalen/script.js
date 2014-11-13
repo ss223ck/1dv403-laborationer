@@ -24,7 +24,7 @@ var makePerson = function(persArr){
         }
         
         arrayOfNames = persArr.map(function(personObject){return personObject.name});
-        arrayOfNames.sort(String.localeCompare);
+        arrayOfNames.sort(function (s0, s1) { return s0.localeCompare(s1); });
         
         arrayOfAge = persArr.map(function(personObject){return personObject.age});
         arrayOfAge.sort();
