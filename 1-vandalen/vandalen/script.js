@@ -15,32 +15,27 @@ var makePerson = function(persArr){
     
     try 
     {
-    for (i = 0; i < persArr.length; i+= 1)
-    {
-        if (typeof persArr[i].name !== 'string')
+        for (i = 0; i < persArr.length; i+= 1)
         {
-            throw new Error("namn var inte av typen string");
+            if (typeof persArr[i].name !== 'string')
+            {
+                throw new Error("namn var inte av typen string");
+            }
         }
-       
-    }
+        
+        arrayOfNames = persArr.map(function(personObject){return personObject.name});
+        arrayOfNames.sort(String.localeCompare);
+        
+        arrayOfAge = persArr.map(function(personObject){return personObject.age});
+        arrayOfAge.sort();
     
-    arrayOfNames = persArr.map(function(personObject){return personObject.name});
-    arrayOfNames.sort(String.localeCompare);
-    
-    arrayOfAge = persArr.map(function(personObject){return personObject.age});
-    arrayOfAge.sort();
-
-    sendBackObject.names = arrayOfNames[0] + ", " + arrayOfNames[1] + ", " + arrayOfNames[2];
-    sendBackObject.minAge = arrayOfAge[0];
-    sendBackObject.maxAge = arrayOfAge[arrayOfAge.length - 1];
-    
-    for(i = 0; i < arrayOfAge.length; i+= 1)
-    {
-        equationForAverage += arrayOfAge[i];
-    }
-    equationForAverage = Math.round(equationForAverage / arrayOfAge.length);
-    
-    sendBackObject.averageAge = equationForAverage;
+        sendBackObject.names = arrayOfNames[0] + ", " + arrayOfNames[1] + ", " + arrayOfNames[2];
+        sendBackObject.minAge = arrayOfAge[0];
+        sendBackObject.maxAge = arrayOfAge[arrayOfAge.length - 1];
+        
+        equationForAverage =  Math.round(arrayOfAge.reduce(function(a, b){return a + b;}) / arrayOfAge.length);
+        
+        sendBackObject.averageAge = equationForAverage;
     }
     catch (error)
     {
