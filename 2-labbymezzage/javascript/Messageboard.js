@@ -8,13 +8,15 @@ var MessageBoard = {
     message: [],
     
     init:function(){
-        for(var i = 0; i < 5; i+= 1)
-        {
-            var mess = new Message("hej hopp " + i, new Date());
-            MessageBoard.message.push(mess);
-        }
-        console.log(MessageBoard.message[2].getText());
-        console.log(MessageBoard.message[4].getText());
+        var buttonPressed = document.getElementById("buttonSend");
+        
+        buttonPressed.addEventListener("click", function(e){
+            var node = this.parentNode;
+            var messageObject = new Message(node.msg.value, new Date());
+            MessageBoard.message.push(messageObject);
+            console.log(MessageBoard.message[0].getText());
+            e.preventDefault();
+        });
     }
 };
 
