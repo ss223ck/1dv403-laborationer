@@ -7,7 +7,7 @@ var makePerson = function(persArr){
     var equationForAverage = 0;
     var i = 0;
     var sendBackObject = {
-        minAge:400,
+        minAge:0,
         maxAge:0,
         averageAge:0,
         names:""
@@ -24,24 +24,21 @@ var makePerson = function(persArr){
         }
         
         arrayOfNames = persArr.map(function(personObject){return personObject.name});
-        arrayOfNames.sort(function (s0, s1) { return s0.localeCompare(s1); });
+        arrayOfNames.sort(function (s0, s1) {return s0.localeCompare(s1); });
         
         arrayOfAge = persArr.map(function(personObject){return personObject.age});
         arrayOfAge.sort();
     
-        sendBackObject.names = arrayOfNames[0] + ", " + arrayOfNames[1] + ", " + arrayOfNames[2];
+        sendBackObject.names = arrayOfNames.join(", ")
         sendBackObject.minAge = arrayOfAge[0];
         sendBackObject.maxAge = arrayOfAge[arrayOfAge.length - 1];
         
-        equationForAverage =  Math.round(arrayOfAge.reduce(function(a, b){return a + b;}) / arrayOfAge.length);
-        
-        sendBackObject.averageAge = equationForAverage;
+        sendBackObject.averageAge =  Math.round(arrayOfAge.reduce(function(a, b){return a + b;}) / arrayOfAge.length);
     }
     catch (error)
     {
         alert(error.message);
     }
     return sendBackObject;
-    
 }
 
