@@ -8,11 +8,13 @@ var MessageBoard = {
     message: [],
     
     init:function(){
-        var mess = new Message("ett medelanden", new Date());
-        alert(mess);
-        alert(mess.getText());
-        mess.setText("ett annat medelanden");
-        alert(mess);
+        for(var i = 0; i < 5; i+= 1)
+        {
+            var mess = new Message("hej hopp " + i, new Date());
+            MessageBoard.message.push(mess);
+        }
+        console.log(MessageBoard.message[2].getText());
+        console.log(MessageBoard.message[4].getText());
     }
 };
 
