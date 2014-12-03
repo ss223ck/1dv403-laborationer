@@ -45,3 +45,7 @@ h1{
 #messageArea div .imageClass{
     float:right;
 }
+#formMessages #messageCounter{
+    float:right;
+    margin-right:20px;
+}

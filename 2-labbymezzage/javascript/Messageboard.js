@@ -48,6 +48,10 @@ var MessageBoard = {
         MessageBoard.message.push(messageObject);
         MessageBoard.renderMessage(MessageBoard.message.length - 1);
         node.msg.value = "";
+        
+        var nodeMsgCounter = document.getElementById("messageCounter");
+        nodeMsgCounter.innerHTML = "Antal meddelanden: " + MessageBoard.message.length;
+        
         e.preventDefault();
     },
     eventCloseButtonPressed: function(e){
@@ -56,6 +60,9 @@ var MessageBoard = {
     removeMessage: function(messageID){
         MessageBoard.message.splice(messageID, 1);
         MessageBoard.renderMessages();
+        
+        var nodeMsgCounter = document.getElementById("messageCounter");
+        nodeMsgCounter.innerHTML = "Antal meddelanden: " + MessageBoard.message.length;
     }
 };
 
