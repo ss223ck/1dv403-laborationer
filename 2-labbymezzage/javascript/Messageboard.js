@@ -12,7 +12,7 @@ var MessageBoard = {
         buttonPressed.addEventListener("click", MessageBoard.eventButtonPressed);
         
         var imageClick = document.getElementById("messageArea");
-        imageClick.addEventListener("click", MessageBoard.eventCloseButtonPressed);
+        imageClick.addEventListener("click", MessageBoard.eventImagePressed);
     },
     renderMessages: function(){
         document.getElementById("messageArea").innerHTML = "";
@@ -27,7 +27,7 @@ var MessageBoard = {
         messageBox.setAttribute("MB-messageID", messageID);
         messageBox.classList.add("messageBox");
         nodeMessageArea.appendChild(messageBox);
-        messageBox.innerHTML = MessageBoard.message[messageID].getText();
+        
         //messagebox.nodeValue = MessageBoard.message[messageID].getText();   ???varför fungerar ej detta.
         //var textVariabel = document.createTextNode(MessageBoard.message[messageID].getText());
         //messageBox.appendChild(textVariabel);
@@ -36,10 +36,26 @@ var MessageBoard = {
         var iconRemove = document.createElement("img");
         iconRemove.classList.add("imageClass");
         iconRemove.setAttribute("src", "css/pic/remove.png");
+        iconRemove.setAttribute("imageType", "removeImage");
         linkIconRemove.setAttribute("href", "#");
         messageBox.appendChild(linkIconRemove);
         linkIconRemove.appendChild(iconRemove);
         
+        var linkTime = document.createElement("a");
+        var iconTime = document.createElement("img");
+        iconTime.classList.add("imageClass");
+        iconTime.setAttribute("src", "css/pic/time.png");
+        iconTime.setAttribute("imageType", "timeImage");
+        linkTime.setAttribute("href", "#");
+        messageBox.appendChild(linkTime);
+        linkTime.appendChild(iconTime);
+        
+        messageBox.innerHTML += MessageBoard.message[messageID].getHTMLText();
+        
+        var timeCreated = document.createElement("div");
+        timeCreated.classList.add("timeOnMessage");
+        timeCreated.innerHTML = MessageBoard.message[messageID].getDate().toLocaleTimeString();
+        messageBox.appendChild(timeCreated);
     },
     
     eventButtonPressed: function(e){
@@ -54,8 +70,14 @@ var MessageBoard = {
         
         e.preventDefault();
     },
-    eventCloseButtonPressed: function(e){
-        MessageBoard.removeMessage(e.target.parentNode.parentNode.getAttribute("MB-messageID"));
+    
+    eventImagePressed: function(e){
+        if(e.target.getAttribute("imageType") === "removeImage"){
+            MessageBoard.removeMessage(e.target.parentNode.parentNode.getAttribute("MB-messageID"));
+        }
+        else if(e.target.getAttribute("imageType") === "timeImage"){
+            MessageBoard.eventTimeButtonPressed(e.target.parentNode.parentNode.getAttribute("MB-messageID"));
+        }
     },
     removeMessage: function(messageID){
         MessageBoard.message.splice(messageID, 1);
@@ -63,6 +85,10 @@ var MessageBoard = {
         
         var nodeMsgCounter = document.getElementById("messageCounter");
         nodeMsgCounter.innerHTML = "Antal meddelanden: " + MessageBoard.message.length;
+    },
+    
+    eventTimeButtonPressed: function(messageID){
+        alert(MessageBoard.message[messageID].getDateText());
     }
 };
 

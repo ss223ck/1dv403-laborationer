@@ -25,9 +25,10 @@ Message.prototype.toString = function() {
 
 Message.prototype.getHTMLText = function(){
     var text = this.getText();
-    text.replace(/[\n\r]/g,"<br />");
+    return text.replace(/[\n\r]/g,"<br />");
 };
 
 Message.prototype.getDateText = function(){
-    
+    var month = this.getDate().getMonth() + 1;
+    return "Inlägget skapades den " + this.getDate().getDate() + "/" + month + " " + this.getDate().getFullYear() + " Klockan " +this.getDate().toLocaleTimeString();
 };

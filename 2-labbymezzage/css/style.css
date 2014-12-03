@@ -36,11 +36,16 @@ h1{
     margin:10px;
     padding-bottom:30px;
 }
+#messageArea div{
+    position:relative;
+    display:block;
+}
 #messageArea .messageBox{
     background-color:red;
     min-height:20px;
     padding:5px;
     margin:10px;
+    padding-bottom:25px;
 }
 #messageArea div .imageClass{
     float:right;
@@ -48,4 +53,9 @@ h1{
 #formMessages #messageCounter{
     float:right;
     margin-right:20px;
+}
+#messageArea  div .timeOnMessage{
+    position:absolute;
+    right:0px;
+    text-align:right;
 }
