@@ -13,6 +13,25 @@ var MessageBoard = {
         
         var imageClick = document.getElementById("messageArea");
         imageClick.addEventListener("click", MessageBoard.eventImagePressed);
+        
+        var keyPressed = document.getElementById("messageTextArea");
+        keyPressed.onkeypress = function (e){
+            if(!e) var e = window.event;
+            if((e.keyCode === 13) && (!e.shiftKey)){
+                var node = e.target;
+                if(node.value !== ""){
+                    var messageObject = new Message(node.value, new Date());
+                
+                    MessageBoard.message.push(messageObject);
+                    MessageBoard.renderMessage(MessageBoard.message.length - 1);
+                    node.value = "";
+                    
+                    var nodeMsgCounter = document.getElementById("messageCounter");
+                    nodeMsgCounter.innerHTML = "Antal meddelanden: " + MessageBoard.message.length;
+                }
+                e.preventDefault();
+            }
+        };
     },
     renderMessages: function(){
         document.getElementById("messageArea").innerHTML = "";
@@ -60,14 +79,16 @@ var MessageBoard = {
     
     eventButtonPressed: function(e){
         var node = this.parentNode;
-        var messageObject = new Message(node.msg.value, new Date());
-        MessageBoard.message.push(messageObject);
-        MessageBoard.renderMessage(MessageBoard.message.length - 1);
-        node.msg.value = "";
+        if(node.msg.value !== ""){
+            var messageObject = new Message(node.msg.value, new Date());
         
-        var nodeMsgCounter = document.getElementById("messageCounter");
-        nodeMsgCounter.innerHTML = "Antal meddelanden: " + MessageBoard.message.length;
-        
+            MessageBoard.message.push(messageObject);
+            MessageBoard.renderMessage(MessageBoard.message.length - 1);
+            node.msg.value = "";
+            
+            var nodeMsgCounter = document.getElementById("messageCounter");
+            nodeMsgCounter.innerHTML = "Antal meddelanden: " + MessageBoard.message.length;
+        }
         e.preventDefault();
     },
     
@@ -80,16 +101,20 @@ var MessageBoard = {
         }
     },
     removeMessage: function(messageID){
+        if(window.confirm("Vill du verkligen radera medelandet?")){
         MessageBoard.message.splice(messageID, 1);
         MessageBoard.renderMessages();
         
         var nodeMsgCounter = document.getElementById("messageCounter");
         nodeMsgCounter.innerHTML = "Antal meddelanden: " + MessageBoard.message.length;
+        }
     },
     
     eventTimeButtonPressed: function(messageID){
         alert(MessageBoard.message[messageID].getDateText());
-    }
+    },
+    
+    
 };
 
 window.addEventListener("load", MessageBoard.init);
