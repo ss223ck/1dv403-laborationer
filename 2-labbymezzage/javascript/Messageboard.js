@@ -21,6 +21,10 @@ var MessageBoard = {
         messageBox.setAttribute("MB-messageID", messageID);
         messageBox.classList.add("messageBox");
         nodeMessageArea.appendChild(messageBox);
+        //messageBox.innerHTML = MessageBoard.message[messageID].getText();
+        //messagebox.nodeValue = MessageBoard.message[messageID].getText();   ???varför fungerar ej detta.
+        var textVariabel = document.createTextNode(MessageBoard.message[messageID].getText());
+        messageBox.appendChild(textVariabel);
     },
     
     eventButtonPressed: function(e){
