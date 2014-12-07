@@ -9,7 +9,15 @@
 }
 #gameArea{
     border:1px solid black;
+    
+}
+#tableGame{
+    margin-left:auto;
+    margin-right:auto;
 }
 #tableGame{
     border:1px solid black;
+}
+#tableGame td{
+    padding:10px;
 }

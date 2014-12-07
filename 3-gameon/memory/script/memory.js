@@ -11,6 +11,8 @@ var memory = {
         
         memory.generateTable();
         
+        var imageClick = document.getElementById("tableGame");
+        imageClick.addEventListener("click", memory.brickClicked);
     },
     
     generateTable: function(){
@@ -35,19 +37,21 @@ var memory = {
     },
     
     renderBrick: function(TR){
-        var nodeTableGame = document.getElementById("tableGame");
 
         var gameBrick = document.createElement("td");
         var enfoldTag = document.createElement("a");
         var iconZero = document.createElement("img");
         iconZero.setAttribute("src", "memory/pics/0.png");
-        iconZero.setAttribute("href", "#");
+        enfoldTag.setAttribute("href", "#");
         
         enfoldTag.appendChild(iconZero);
         gameBrick.appendChild(enfoldTag);
         TR.appendChild(gameBrick);
     }
     
+    brickClicked:function(){
+        
+    }
 };
 
 window.addEventListener("load", memory.init);
