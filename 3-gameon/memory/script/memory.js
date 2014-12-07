@@ -4,9 +4,9 @@ var memory = {
     
     brickArray: [],
     
-    init: function(){
-        brickArray = RandomGenerator.getPictureArray(2,2);
-        console.log(brickArray);
+    init:function(){
+        memory.brickArray = RandomGenerator.getPictureArray(2,2);
+        console.log(memory.brickArray);
     }
     
 };
