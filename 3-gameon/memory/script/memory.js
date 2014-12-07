@@ -3,11 +3,13 @@
 var memory = {
     
     brickArray: [],
-    rows: 4,
+    rows: 3,
     cols: 4,
     firstPicture: 0,
     secondPicture: 0,
     turnedPictures: 0,
+    clicks: 0,
+    succeded: 0,
     
     init:function(){
         memory.brickArray = RandomGenerator.getPictureArray(memory.rows, memory.cols);
@@ -16,6 +18,7 @@ var memory = {
         
         var imageClick = document.getElementById("tableGame");
         imageClick.addEventListener("click", memory.brickClicked);
+        
     },
     
     generateTable: function(){
@@ -64,11 +67,20 @@ var memory = {
         else if((memory.turnedPictures === 1) && 
                 (memory.firstPicture != e.target.parentNode.getAttribute("pictureID")) && 
                 (e.target.getAttribute("src") === "memory/pics/"+ 0 +".png")){
-            
+            memory.clicks += 1;
             if(memory.brickArray[e.target.parentNode.getAttribute("pictureID")] === memory.brickArray[memory.firstPicture]){
                 e.target.setAttribute("src", "memory/pics/"+ memory.brickArray[memory.firstPicture] +".png");
                 memory.firstPicture = 0;
                 memory.turnedPictures = 0;
+                memory.succeded += 2;
+                if(memory.succeded === memory.rows*memory.cols){
+                    var finalDiv = document.createElement("div");
+                    var finalText = document.createElement("p");
+                    finalText.innerHTML = "Grattis! Du klarade det på " + memory.clicks + " försök!";
+                    var nodeGA = document.getElementById("gameArea");
+                    finalDiv.appendChild(finalText);
+                    nodeGA.appendChild(finalDiv);
+                }
             }
             else{
                 memory.secondPicture = e.target.parentNode.getAttribute("pictureID");
