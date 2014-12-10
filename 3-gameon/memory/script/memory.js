@@ -22,18 +22,19 @@ var memory = {
     },
     
     generateTable: function(){
-        var nodeGameArea = document.getElementById("gameArea");
-        var gameTable = document.createElement("table");
-        
-        
+        var nodeGameArea = document.getElementById("gameArea"), 
+            gameTable = document.createElement("table"), 
+            i, 
+            j, 
+            createTR;
         
         gameTable.setAttribute("id", "tableGame");
         nodeGameArea.appendChild(gameTable);
         
-        for(var i = 0; i < memory.rows; i+=1){
-            var createTR = document.createElement("tr");
+        for(i = 0; i < memory.rows; i+=1){
+            createTR = document.createElement("tr");
             
-            for(var j = 0; j < memory.cols; j+=1){
+            for(j = 0; j < memory.cols; j+=1){
 
                 memory.renderBrick(createTR, i*memory.cols+j);
             }
@@ -44,9 +45,9 @@ var memory = {
     
     renderBrick: function(TR, ID){
 
-        var gameBrick = document.createElement("td");
-        var enfoldTag = document.createElement("a");
-        var iconZero = document.createElement("img");
+        var gameBrick = document.createElement("td"),
+            enfoldTag = document.createElement("a"),
+            iconZero = document.createElement("img");
         iconZero.setAttribute("src", "memory/pics/0.png");
         enfoldTag.setAttribute("href", "#");
         enfoldTag.setAttribute("pictureID", ID);
@@ -58,7 +59,7 @@ var memory = {
     },
     
     brickClicked:function(e){
-        if(memory.turnedPictures === 0){
+        if((memory.turnedPictures === 0) && (e.target.getAttribute("src") === "memory/pics/"+ 0 +".png")){
             var node = e.target.parentNode;
             memory.firstPicture = node.getAttribute("pictureID");
             e.target.setAttribute("src", "memory/pics/"+ memory.brickArray[memory.firstPicture] +".png");
