@@ -2,30 +2,47 @@
 
 var quiz = {
     
-    xhr: new XMLHttpRequest(),
     serverName: "http://vhost3.lnu.se:20080/question/1",
     infoFromServer: "",
     
-    quiz.xhr.open("GET", quiz.serverName, true),
     
-    quiz.xhr.send(null),
     
     init: function(){
         
-        document.getElementById("sendAnswear").addEventListener("click", quiz.trySendAnswear);
+        document.getElementById("getQuestion").addEventListener("click", quiz.tryGetQuestion);
         
-        quiz.xhr.onreadystatechange = function(){
-            
-            if(quiz.xhr.readyState === 4 && quiz.xhr.status === 200){
-                quiz.infoFromServer = JSON.parse(quiz.xhr.responseText);
-            }
-        };
+        document.getElementById("sendAnswear").addEventListener("click", quiz.trySendQuestion);
     },
     
-    trySendAnswear: function () {
+    tryGetQuestion: function () {
+        var xhr = new XMLHttpRequest();
         
+        xhr.onreadystatechange = function(){
+            
+            if(xhr.readyState === 4 && xhr.status === 200){
+                quiz.infoFromServer = JSON.parse(xhr.responseText);
+            }
+        };
         
-        quiz.xhr.send(JSON.stringify());
+        xhr.open("GET", quiz.serverName, true);
+        xhr.send(null);
+        
+        quiz.renderMessage();
+        
+        return false;
+    },
+    
+    trySendQuestion: function(){
+        
+        return false;
+    },
+    
+    renderMessage: function () {
+        var node = document.getElementById("questionArea");
+        var addPElement = document.createElement("p");
+        
+        addPElement.innerHTML = quiz.infoFromServer.question;
+        node.appendChild(addPElement);
     }
 };
 
