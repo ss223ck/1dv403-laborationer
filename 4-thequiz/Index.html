@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="sv">
+<head>
+	<meta charset="UTF-8" />
+ 	<title>thequiz</title>
+ 	<link rel="stylesheet" href="style.css">
+</head>
+    <body>
+        <div id="container">
+            <div id="questionArea"></div>
+            <div>
+                <form action="http://voyager.lnu.se/tekinet/kurser/dtt/wp_webbintro/form.php" method="post" id="contactForm">
+                    <fieldset id="questionFieldset">
+                        <legend>Fråga</legend>
+                
+                        <label for="question">Fråga: </label><textarea name="answear" id="question"></textarea>
+                    </fieldset>
+                    <input type="submit" name="Skicka förfrågan" id="sendQuestion"/>
+                </form>
+            </div>
+        </div>
+        <script src="scripts/quiz.js"></script>
+    </body>
+</html>
