@@ -8,20 +8,24 @@ var quiz = {
     
     quiz.xhr.open("GET", quiz.serverName, true),
     
-    quiz.xhr.send(null);
+    quiz.xhr.send(null),
     
     init: function(){
         
         document.getElementById("sendAnswear").addEventListener("click", quiz.trySendAnswear);
-    },
-    
-    trySendAnswear: function (argument) {
+        
         quiz.xhr.onreadystatechange = function(){
             
             if(quiz.xhr.readyState === 4 && quiz.xhr.status === 200){
                 quiz.infoFromServer = JSON.parse(quiz.xhr.responseText);
             }
         };
+    },
+    
+    trySendAnswear: function () {
+        
+        
+        quiz.xhr.send(JSON.stringify());
     }
 };
 
