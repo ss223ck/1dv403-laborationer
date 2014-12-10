@@ -4,6 +4,7 @@ var quiz = {
     
     serverName: "http://vhost3.lnu.se:20080/question/1",
     infoFromServer: "",
+    tryCounter: 1,
     
     init: function(){
         
@@ -13,7 +14,8 @@ var quiz = {
     },
     
     tryGetQuestion: function () {
-        var xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest(),
+            nodePromptGetQuestion = document.getElementById("promptGetQuestion");
         
         xhr.open("GET", quiz.serverName, true);
         xhr.onreadystatechange = function(){
@@ -21,12 +23,11 @@ var quiz = {
             if(xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 304)){
                 quiz.infoFromServer = JSON.parse(xhr.responseText);
                 quiz.renderMessage();
+                 nodePromptGetQuestion.innerHTML = "";
             }
         };
         
-        
         xhr.send(null);
-        
         
         return false;
     },
@@ -34,6 +35,7 @@ var quiz = {
     trySendQuestion: function(){
         var answearTextArea = {"answer": document.getElementById("answearTextArea").value},
             nodeAnswerFromServer = document.getElementById("answerFromServer"),
+            nodePromptGetQuestion = document.getElementById("promptGetQuestion"),
             xhrSend = new XMLHttpRequest();
         
         xhrSend.open("POST", quiz.serverName, true);
@@ -43,13 +45,22 @@ var quiz = {
                     quiz.infoFromServer = JSON.parse(xhrSend.responseText);
                     quiz.serverName = quiz.infoFromServer.nextURL;
                     
+                    
                     if(quiz.infoFromServer.message === "Correct answer!"){
                         nodeAnswerFromServer.innerHTML = "Du svarade rätt!";
+                        nodePromptGetQuestion.innerHTML = "Hämta ny fråga!";
                     }
-                    
+                    else{
+                        nodeAnswerFromServer.innerHTML = "Något är fel med requesten";
+                    }
+                    if(quiz.infoFromServer.nextURL === undefined){
+                        nodeAnswerFromServer.innerHTML = "Grattis du klarade spelet på "+ quiz.tryCounter +" försök";
+                        nodePromptGetQuestion.innerHTML = "";
+                    }
                 }
                 else if(xhrSend.status === 400){
                     nodeAnswerFromServer.innerHTML = "Du svarade fel!";
+                    quiz.tryCounter += 1;
                 }
             }
             return false;
