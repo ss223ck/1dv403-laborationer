@@ -5,6 +5,7 @@ var quiz = {
     serverName: "http://vhost3.lnu.se:20080/question/1",
     infoFromServer: "",
     tryCounter: 1,
+    tryForEachQuestion: 1,
     
     init: function(){
         
@@ -17,13 +18,14 @@ var quiz = {
         var xhr = new XMLHttpRequest(),
             nodePromptGetQuestion = document.getElementById("promptGetQuestion");
         
+        quiz.tryForEachQuestion = 1;
         xhr.open("GET", quiz.serverName, true);
         xhr.onreadystatechange = function(){
             
             if(xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 304)){
                 quiz.infoFromServer = JSON.parse(xhr.responseText);
                 quiz.renderMessage();
-                 nodePromptGetQuestion.innerHTML = "";
+                nodePromptGetQuestion.innerHTML = "";
             }
         };
         
@@ -34,7 +36,7 @@ var quiz = {
     
     trySendQuestion: function(){
         var answearTextArea = {"answer": document.getElementById("answearTextArea").value},
-            nodeAnswerFromServer = document.getElementById("answerFromServer"),
+            nodeMessageFromGame = document.getElementById("answerFromServer"),
             nodePromptGetQuestion = document.getElementById("promptGetQuestion"),
             xhrSend = new XMLHttpRequest();
         
@@ -47,20 +49,21 @@ var quiz = {
                     
                     
                     if(quiz.infoFromServer.message === "Correct answer!"){
-                        nodeAnswerFromServer.innerHTML = "Du svarade rätt!";
+                        nodeMessageFromGame.innerHTML = "Du svarade rätt!";
                         nodePromptGetQuestion.innerHTML = "Hämta ny fråga!";
                     }
                     else{
-                        nodeAnswerFromServer.innerHTML = "Något är fel med requesten";
+                        nodeMessageFromGame.innerHTML = "Något är fel med requesten";
                     }
                     if(quiz.infoFromServer.nextURL === undefined){
-                        nodeAnswerFromServer.innerHTML = "Grattis du klarade spelet på "+ quiz.tryCounter +" försök";
+                        nodeMessageFromGame.innerHTML = "Grattis du klarade spelet på "+ quiz.tryCounter +" försök";
                         nodePromptGetQuestion.innerHTML = "";
                     }
                 }
                 else if(xhrSend.status === 400){
-                    nodeAnswerFromServer.innerHTML = "Du svarade fel!";
+                    nodeMessageFromGame.innerHTML = "Du svarade fel! Antal försök" + quiz.tryForEachQuestion;
                     quiz.tryCounter += 1;
+                    quiz.tryForEachQuestion += 1;
                 }
             }
             return false;
