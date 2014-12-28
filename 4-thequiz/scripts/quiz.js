@@ -16,6 +16,7 @@ var quiz = {
     
     tryGetQuestion: function () {
         var xhr = new XMLHttpRequest(),
+            nodeMessageFromGame = document.getElementById("answerFromGame"),
             nodePromptGetQuestion = document.getElementById("promptGetQuestion");
         
         quiz.tryForEachQuestion = 1;
@@ -26,6 +27,7 @@ var quiz = {
                 quiz.infoFromServer = JSON.parse(xhr.responseText);
                 quiz.renderMessage();
                 nodePromptGetQuestion.innerHTML = "";
+                nodeMessageFromGame.innerHTML = "";
             }
         };
         
@@ -36,7 +38,7 @@ var quiz = {
     
     trySendQuestion: function(){
         var answearTextArea = {"answer": document.getElementById("answearTextArea").value},
-            nodeMessageFromGame = document.getElementById("answerFromServer"),
+            nodeMessageFromGame = document.getElementById("answerFromGame"),
             nodePromptGetQuestion = document.getElementById("promptGetQuestion"),
             xhrSend = new XMLHttpRequest();
         
@@ -61,7 +63,8 @@ var quiz = {
                     }
                 }
                 else if(xhrSend.status === 400){
-                    nodeMessageFromGame.innerHTML = "Du svarade fel! Antal försök" + quiz.tryForEachQuestion;
+                    nodeMessageFromGame.innerHTML = "Du svarade fel! Antal försök " + quiz.tryForEachQuestion;
+                    
                     quiz.tryCounter += 1;
                     quiz.tryForEachQuestion += 1;
                 }
