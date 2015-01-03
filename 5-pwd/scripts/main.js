@@ -4,7 +4,6 @@
 var Main = {
     
     idForWindowCount: 0,
-    serverName: "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/",
     
     Init : function(){
         Main.RenderIconForPictures();
@@ -30,19 +29,10 @@ var Main = {
         nodeToolbelt.addEventListener("click", Main.RenderBackgroundPictures);
     },
     RenderBackgroundPictures: function(){
-        var xhr = new XMLHttpRequest(),
-            nodeWindowToAddObject = "",
-            pictureObjects = "";
+        var nodeWindowToAddObject = "";
         
-        xhr.onreadystatechange = function(){
-            
-            if(xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 304)){
-                pictureObjects = JSON.parse(xhr.responseText);
-                nodeWindowToAddObject = new RenderTumbPicturesInDiv(pictureObjects, ++Main.idForWindowCount);
-            }
-        };
-        xhr.open("GET", Main.serverName, true);
-        xhr.send(null);
+        nodeWindowToAddObject = new RenderThumbPicturesInDiv(++Main.idForWindowCount);
+        
     },
     
 };

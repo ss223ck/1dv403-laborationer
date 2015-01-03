@@ -1,13 +1,29 @@
 "use strict";
 
 
-function RenderTumbPicturesInDiv (pictureObjects, idIndex){
-    var pictureTagHeight = 0,
-        pictureTagWidth = 0,
-        nodeWindowToAddObject = document.getElementById("idWindow" + idIndex),
-        i = 0;
+function RenderThumbPicturesInDiv (idIndex){
     
     MyWindow.call(this, idIndex);
+    
+    var pictureObjects,
+        xhr = new XMLHttpRequest();
+    
+    xhr.onreadystatechange = function(){
+            
+        if(xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 304)){
+            pictureObjects = JSON.parse(xhr.responseText);
+            var addingPics = new AddPicturesToContent(pictureObjects, idIndex);
+        }
+    };
+    xhr.open("GET", "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/", true);
+    xhr.send(null);
+}
+
+function AddPicturesToContent(pictureObjects, idIndex){
+    var pictureTagHeight = 0,
+        nodeWindowToAddObject = document.getElementById("idWindow" + idIndex),
+        pictureTagWidth = 0,
+        i = 0;
         
     for(i; i < pictureObjects.length; i += 1){
         
@@ -33,6 +49,7 @@ function RenderTumbPicturesInDiv (pictureObjects, idIndex){
         
         nodeCreatePictureImg.setAttribute("src", pictureObjects[i].thumbURL);
         nodeWindowToAddObject.appendChild(nodeCreatePictureDiv);
-    }  
+    }
 }
-RenderTumbPicturesInDiv.prototype = new MyWindow();
+
+RenderThumbPicturesInDiv.prototype = new MyWindow();
