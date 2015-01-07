@@ -46,7 +46,7 @@ function MemoryGame(idIndex){
         iconZero.setAttribute("src", "CSS/pics/picsMemoryGame/0.png");
         enfoldTag.setAttribute("href", "#");
         enfoldTag.setAttribute("pictureID", ID);
-        iconZero.classList.add("picture");
+        iconZero.classList.add("picture" + idIndex);
         
         enfoldTag.appendChild(iconZero);
         gameBrick.appendChild(enfoldTag);
@@ -73,9 +73,8 @@ function MemoryGame(idIndex){
                     var finalDiv = document.createElement("div");
                     var finalText = document.createElement("p");
                     finalText.innerHTML = "Grattis! Du klarade det på " + that.clicks + " försök!";
-                    var nodeGA = document.getElementById("gameArea");
                     finalDiv.appendChild(finalText);
-                    nodeGA.appendChild(finalDiv);
+                    document.getElementById("idWindow" + idIndex).appendChild(finalDiv);
                 }
             }
             else{
@@ -87,7 +86,7 @@ function MemoryGame(idIndex){
         }
     };
     this.brickTurnBack = function(){
-        var pictureNodes = document.getElementsByClassName("picture");
+        var pictureNodes = document.getElementsByClassName("picture" + idIndex);
         
         for(var i = 0; i < pictureNodes.length; i+=1){
             if((pictureNodes[i].parentNode.getAttribute("pictureID") === that.firstPicture) || (pictureNodes[i].parentNode.getAttribute("pictureID") === that.secondPicture)){
