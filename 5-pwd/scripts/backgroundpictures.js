@@ -1,7 +1,7 @@
 "use strict";
 
 
-ShowPictureFullSize().prototype = new MyWindow();
+ShowPictureFullSize.prototype = new MyWindow();
 RenderThumbPicturesInDiv.prototype = new MyWindow();
 
 function RenderThumbPicturesInDiv (idIndex){

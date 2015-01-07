@@ -8,6 +8,7 @@ var Main = {
     Init : function(){
         Main.RenderIconForPictures();
         Main.RenderIconForRSSFeed();
+        Main.RenderIconForMemoryGame();
     },
     
     RenderIconForPictures : function(){
@@ -46,11 +47,11 @@ var Main = {
     },
     
     RenderIconForMemoryGame: function(){
-        var nodeToolbelt = document.getElementById("openPicturesForBackground"),
+        var nodeToolbelt = document.getElementById("openMemory"),
             enfoldTag = document.createElement("a"),
             icontag = document.createElement("img");
         
-        icontag.setAttribute("src", "CSS/pics/rss-icon.png");
+        icontag.setAttribute("src", "CSS/pics/games-icon.png");
         enfoldTag.setAttribute("href", "#");
         
         enfoldTag.appendChild(icontag);
@@ -58,10 +59,10 @@ var Main = {
         nodeToolbelt.addEventListener("click", Main.StartMemoryGame);
     },
     StartMemoryGame: function(){
-        
+        new MemoryGame(++Main.idForWindowCount);
     },
     GetPicture: function(e) {
-        var createPictureWindow = new ShowPictureFullSize(++Main.idForWindowCount, e.currentTarget.attributes.url.value,
+        new ShowPictureFullSize(++Main.idForWindowCount, e.currentTarget.attributes.url.value,
         e.currentTarget.attributes.height.value, e.currentTarget.attributes.width.value);
     },
     RemoveMyWindowObject: function(e){

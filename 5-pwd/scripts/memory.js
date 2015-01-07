@@ -1,54 +1,49 @@
 "use strict"
 
-var memory = {
+MemoryGame.prototype = new MyWindow();
+
+function MemoryGame(idIndex){
+    MyWindow.call(this, idIndex);
     
-    brickArray: [],
-    rows: 3,
-    cols: 4,
-    firstPicture: 0,
-    secondPicture: 0,
-    turnedPictures: 0,
-    clicks: 0,
-    succeded: 0,
+    var that = this;
+    this.brickArray = [];
+    this.rows = 3;
+    this.cols = 4;
+    this.firstPicture = 0;
+    this.secondPicture = 0;
+    this.turnedPictures = 0;
+    this.clicks = 0;
+    this.succeded = 0;
     
-    init:function(){
-        memory.brickArray = RandomGenerator.getPictureArray(memory.rows, memory.cols);
-        
-        memory.generateTable();
-        
-        var imageClick = document.getElementById("tableGame");
-        imageClick.addEventListener("click", memory.brickClicked);
-        
-    },
     
-    generateTable: function(){
-        var nodeGameArea = document.getElementById("gameArea"), 
+    
+
+    this.generateTable = function(idIndex){
+        var nodeGameArea = document.getElementById("idWindow" + idIndex), 
             gameTable = document.createElement("table"), 
             i, 
-            j, 
+            j,
             createTR;
         
-        gameTable.setAttribute("id", "tableGame");
+        gameTable.setAttribute("id", "tableGame" + idIndex);
         nodeGameArea.appendChild(gameTable);
         
-        for(i = 0; i < memory.rows; i+=1){
+        for(i = 0; i < this.rows; i+=1){
             createTR = document.createElement("tr");
             
-            for(j = 0; j < memory.cols; j+=1){
-
-                memory.renderBrick(createTR, i*memory.cols+j);
+            for(j = 0; j < this.cols; j+=1){
+    
+                this.renderBrick(createTR, i*this.cols+j);
             }
             gameTable.appendChild(createTR);
         }
-        
-    },
-    
-    renderBrick: function(TR, ID){
-
+    };
+    this.renderBrick = function(TR, ID){
         var gameBrick = document.createElement("td"),
             enfoldTag = document.createElement("a"),
             iconZero = document.createElement("img");
-        iconZero.setAttribute("src", "memory/pics/0.png");
+            
+        iconZero.setAttribute("src", "CSS/pics/picsMemoryGame/0.png");
         enfoldTag.setAttribute("href", "#");
         enfoldTag.setAttribute("pictureID", ID);
         iconZero.classList.add("picture");
@@ -56,53 +51,62 @@ var memory = {
         enfoldTag.appendChild(iconZero);
         gameBrick.appendChild(enfoldTag);
         TR.appendChild(gameBrick);
-    },
-    
-    brickClicked:function(e){
-        if((memory.turnedPictures === 0) && (e.target.getAttribute("src") === "memory/pics/"+ 0 +".png")){
+    };
+    this.brickClicked = function(e){
+        
+        if((that.turnedPictures === 0) && (e.target.getAttribute("src") === "CSS/pics/picsMemoryGame/"+ 0 +".png")){
             var node = e.target.parentNode;
-            memory.firstPicture = node.getAttribute("pictureID");
-            e.target.setAttribute("src", "memory/pics/"+ memory.brickArray[memory.firstPicture] +".png");
-            memory.turnedPictures = 1;
+            that.firstPicture = node.getAttribute("pictureID");
+            e.target.setAttribute("src", "CSS/pics/picsMemoryGame/"+ that.brickArray[that.firstPicture] +".png");
+            that.turnedPictures = 1;
         } 
-        else if((memory.turnedPictures === 1) && 
-                (memory.firstPicture != e.target.parentNode.getAttribute("pictureID")) && 
-                (e.target.getAttribute("src") === "memory/pics/"+ 0 +".png")){
-            memory.clicks += 1;
-            if(memory.brickArray[e.target.parentNode.getAttribute("pictureID")] === memory.brickArray[memory.firstPicture]){
-                e.target.setAttribute("src", "memory/pics/"+ memory.brickArray[memory.firstPicture] +".png");
-                memory.firstPicture = 0;
-                memory.turnedPictures = 0;
-                memory.succeded += 2;
-                if(memory.succeded === memory.rows*memory.cols){
+        else if((that.turnedPictures === 1) && 
+                (that.firstPicture != e.target.parentNode.getAttribute("pictureID")) && 
+                (e.target.getAttribute("src") === "CSS/pics/picsMemoryGame/"+ 0 +".png")){
+            that.clicks += 1;
+            if(that.brickArray[e.target.parentNode.getAttribute("pictureID")] === that.brickArray[that.firstPicture]){
+                e.target.setAttribute("src", "CSS/pics/picsMemoryGame/"+ that.brickArray[that.firstPicture] +".png");
+                that.firstPicture = 0;
+                that.turnedPictures = 0;
+                that.succeded += 2;
+                if(that.succeded === that.rows*that.cols){
                     var finalDiv = document.createElement("div");
                     var finalText = document.createElement("p");
-                    finalText.innerHTML = "Grattis! Du klarade det på " + memory.clicks + " försök!";
+                    finalText.innerHTML = "Grattis! Du klarade det på " + that.clicks + " försök!";
                     var nodeGA = document.getElementById("gameArea");
                     finalDiv.appendChild(finalText);
                     nodeGA.appendChild(finalDiv);
                 }
             }
             else{
-                memory.secondPicture = e.target.parentNode.getAttribute("pictureID");
-                e.target.setAttribute("src", "memory/pics/"+ memory.brickArray[memory.secondPicture] +".png");
-                setTimeout(memory.brickTurnBack, 1000);
-                memory.turnedPictures = 2;
+                that.secondPicture = e.target.parentNode.getAttribute("pictureID");
+                e.target.setAttribute("src", "CSS/pics/picsMemoryGame/"+ that.brickArray[that.secondPicture] +".png");
+                setTimeout(that.brickTurnBack, 1000);
+                that.turnedPictures = 2;
             }
         }
-    },
-    brickTurnBack: function(){
+    };
+    this.brickTurnBack = function(){
         var pictureNodes = document.getElementsByClassName("picture");
         
         for(var i = 0; i < pictureNodes.length; i+=1){
-            if((pictureNodes[i].parentNode.getAttribute("pictureID") === memory.firstPicture) || (pictureNodes[i].parentNode.getAttribute("pictureID") === memory.secondPicture)){
-                pictureNodes[i].setAttribute("src", "memory/pics/0.png");
+            if((pictureNodes[i].parentNode.getAttribute("pictureID") === that.firstPicture) || (pictureNodes[i].parentNode.getAttribute("pictureID") === that.secondPicture)){
+                pictureNodes[i].setAttribute("src", "CSS/pics/picsMemoryGame/0.png");
             }
         }
-        memory.firstPicture = 0;
-        memory.secondPicture = 0;
-        memory.turnedPictures = 0;
-    }
-};
+        that.firstPicture = 0;
+        that.secondPicture = 0;
+        that.turnedPictures = 0;
+    };
+    
+    this.init = function(idIndex){
+        this.brickArray = RandomGenerator.getPictureArray(this.rows, this.cols);
+        
+        this.generateTable(idIndex);
+        
+        var imageClick = document.getElementById("tableGame" + idIndex);
+        imageClick.addEventListener("click", this.brickClicked);
+    };
+    this.init(idIndex);
+}
 
-window.addEventListener("load", memory.init);
