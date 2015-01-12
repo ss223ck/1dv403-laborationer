@@ -5,23 +5,33 @@ ShowPictureFullSize.prototype = new MyWindow();
 RenderThumbPicturesInDiv.prototype = new MyWindow();
 
 function RenderThumbPicturesInDiv (idIndex){
-    MyWindow.call(this, idIndex);
+    MyWindow.call(this, idIndex, "Images", "CSS/pics/icon1.png");
     
     var pictureObjects,
+        nodeWindowBottombar = document.getElementById("idWindowBottombar" + idIndex),
+        divContainerGif = document.createElement("div"),
+        gifImageForLoading = document.createElement("img"),
         xhr = new XMLHttpRequest();
+    
+    gifImageForLoading.setAttribute("src", "CSS/pics/loadingicon.gif");
+    divContainerGif.appendChild(gifImageForLoading);
+    nodeWindowBottombar.appendChild(divContainerGif);
     
     xhr.onreadystatechange = function(){
             
         if(xhr.readyState === 4 && (xhr.status === 200 || xhr.status === 304)){
+            
             pictureObjects = JSON.parse(xhr.responseText);
-            new AddPicturesToContent(pictureObjects, idIndex);
+            
+            new AddPicturesToContent(pictureObjects, idIndex, nodeWindowBottombar);
+            
         }
     };
     xhr.open("GET", "http://homepage.lnu.se/staff/tstjo/labbyServer/imgviewer/", true);
     xhr.send(null);
 }
 
-function AddPicturesToContent(pictureObjects, idIndex){
+function AddPicturesToContent(pictureObjects, idIndex, nodeWindowBottombar){
     var pictureTagHeight = 0,
         nodeWindowToAddObject = document.getElementById("idWindow" + idIndex),
         pictureTagWidth = 0,
@@ -46,6 +56,8 @@ function AddPicturesToContent(pictureObjects, idIndex){
         nodeCreatePictureA.setAttribute("href", "#");
         nodeCreatePictureA.appendChild(nodeCreatePictureImg);
         nodeCreatePictureDivEnfold.appendChild(nodeCreatePictureA);
+        nodeCreatePictureDivEnfold.style.width = pictureObjects[i].thumbWidth + "px";
+        
         nodeCreatePictureDiv.appendChild(nodeCreatePictureDivEnfold);
         nodeCreatePictureDiv.style.height = pictureTagHeight + "px";
         nodeCreatePictureDiv.style.width = pictureTagWidth + "px";
@@ -58,9 +70,10 @@ function AddPicturesToContent(pictureObjects, idIndex){
         nodeCreatePictureImg.setAttribute("src", pictureObjects[i].thumbURL);
         nodeWindowToAddObject.appendChild(nodeCreatePictureDiv);
     }
+    nodeWindowBottombar.removeChild(nodeWindowBottombar.childNodes[0]);
 }
 function ShowPictureFullSize(idIndex, imageURL, imageHeight, imageWidth){
-    MyWindow.call(this, idIndex);
+    MyWindow.call(this, idIndex, "Images", "CSS/pics/icon1.png");
     
     var nodeWindowToAddPicture = document.getElementById("idWindow" + idIndex),
         nodeRenderImage = document.createElement("img");

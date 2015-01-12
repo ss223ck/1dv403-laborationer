@@ -24,9 +24,7 @@ var Main = {
         nodeToolbelt.addEventListener("click", Main.RenderBackgroundPictures);
     },
     RenderBackgroundPictures: function(){
-        var nodeWindowToAddObject = "";
-        
-        nodeWindowToAddObject = new RenderThumbPicturesInDiv(++Main.idForWindowCount);
+        new RenderThumbPicturesInDiv(++Main.idForWindowCount);
         
     },
     

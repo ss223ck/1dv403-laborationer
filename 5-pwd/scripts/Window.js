@@ -1,6 +1,6 @@
 "use strict";
 
-function MyWindow (idForWindowCount){
+function MyWindow (idForWindowCount, headText, headImage){
     var nodeContent = document.getElementById("content"),
         nodeAddDivMain = document.createElement("div"),
         nodeAddTopBar = document.createElement("div"),
@@ -8,11 +8,16 @@ function MyWindow (idForWindowCount){
         nodeAddDivContent = document.createElement("div"),
         nodeAddDivExit = document.createElement("div"),
         nodeAddAExit = document.createElement("a"),
-        nodeAddImgExit = document.createElement("img");
+        nodeAddImgExit = document.createElement("img"),
+        picInHeader = document.createElement("img");
 
     nodeAddDivContent.className = "middleContentDiv";
     nodeAddBottomBar.className = "bottomBarDiv";
+    nodeAddBottomBar.setAttribute("id", "idWindowBottombar" + idForWindowCount);
     nodeAddTopBar.className = "topBarDiv";
+    picInHeader.setAttribute("src", headImage);
+    nodeAddTopBar.appendChild(picInHeader);
+    nodeAddTopBar.innerHTML += headText;
     nodeAddDivMain.className = "WindowMain";
     nodeAddDivContent.setAttribute("id", "idWindow" + idForWindowCount);
     nodeAddImgExit.setAttribute("src", "CSS/pics/iconExit.png");

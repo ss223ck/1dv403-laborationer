@@ -3,7 +3,7 @@
 MemoryGame.prototype = new MyWindow();
 
 function MemoryGame(idIndex){
-    MyWindow.call(this, idIndex);
+    MyWindow.call(this, idIndex, "Memory Game", "CSS/pics/games-icon.png");
     
     var that = this;
     this.brickArray = [];
